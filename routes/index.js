@@ -16,15 +16,18 @@ router.get('/ip', function(req, res, next) {
     item5:'',
     item6:'',
     item7:'',
-    item8:'',
-    item9:'',
-    item10:'',
+    item8:''
   });
 });
 
 router.post('/ip', function(req, res, next) {
-  //console.log(req.body);
-  //把取得的表單內容分割並轉成陣列
+  
+  console.log(req.body);
+
+  if(req.body.ip_Address === ''){
+    res.render('success',{msg:'IP NOT VALID',url:'/ip'});
+  }else{
+    //把取得的表單內容分割並轉成陣列
   let str = req.body.ip_CIDR; 
   let index = str.indexOf("/");//區分CIDR
   let str1  =str.substr(0,index);
@@ -85,7 +88,9 @@ router.post('/ip', function(req, res, next) {
 
   let item4 = network_address.join('.');
   let item5 = boardcast_address.join('.');
-  let item6 = useable_ip;
+  let item6 = useable_ip+2;
+  let item7 = useable_ip;
+  let item8 = subnetmask.join('.');
   
  
   
@@ -98,8 +103,14 @@ router.post('/ip', function(req, res, next) {
     item3:item3,
     item4:item4,
     item5:item5,
-    item6:item6
+    item6:item6,
+    item7:item7,
+    item8:item8
   });
+  }
+
+  
+  
   // res.render('success',{msg:'添加成功',url:'/ip'});
 });
 
